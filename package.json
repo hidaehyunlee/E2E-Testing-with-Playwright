@@ -8,6 +8,10 @@
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
   },
   "devDependencies": {
+    "@playwright/test": "^1.36.1",
     "concurrently": "^6.5.1"
+  },
+  "dependencies": {
+    "playwright": "^1.36.1"
   }
 }
