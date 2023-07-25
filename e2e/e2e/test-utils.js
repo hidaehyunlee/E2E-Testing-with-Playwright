@@ -1,10 +1,16 @@
 // test-utils.js
 const { chromium } = require("playwright");
 
+const generateRandomEmail = () => {
+  // Generate a random string for the email
+  const randomString = Math.random().toString(36).substring(7);
+  return `${randomString}@mail.com`;
+};
+
 const generateUser = (name, email, password) => {
   return {
     name: name || "이대현",
-    email: email || "hidaehyunlee@gmail.com",
+    email: email || generateRandomEmail(),
     password: password || "validPassword",
   };
 };
@@ -19,12 +25,14 @@ const register = async (page, name, email, password) => {
   await page.click('button:has-text("Register")');
 
   // 서버 응답을 기다립니다. (회원가입 상태 코드 200 확인)
-  await page.waitForResponse((response) =>
+  const response = await page.waitForResponse((response) =>
     response.url().includes("http://localhost:5555/register")
   );
+    
+    return response;
 };
 
-const loginWithResponse = async (page, email, password) => {
+const login = async (page, email, password) => {
   const user = generateUser(null, email, password);
 
   await page.goto("http://localhost:3000");
@@ -50,7 +58,7 @@ async function newPage(context) {
 
 module.exports = {
   register,
-  loginWithResponse,
+  login,
   generateUser,
   newContext,
   newPage,

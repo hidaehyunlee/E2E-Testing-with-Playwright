@@ -1,5 +1,5 @@
 const { test, expect } = require("@playwright/test");
-const { register, loginWithResponse } = require("../test-utils");
+const { register, login } = require("../test-utils");
 
 test("멀티 로그인 후 프로필 조회", async ({ context }) => {
   const page1 = await context.newPage();
@@ -7,11 +7,11 @@ test("멀티 로그인 후 프로필 조회", async ({ context }) => {
 
   // 사용자 1로 회원가입 및 로그인
   await register(page1, "사용자 1", "user1@mail.com", "validPassword");
-  await loginWithResponse(page1, "user1@mail.com", "validPassword");
+  await login(page1, "user1@mail.com", "validPassword");
 
   // 사용자 2로 회원가입 및 로그인
   await register(page2, "사용자 2", "user2@mail.com", "validPassword");
-  await loginWithResponse(page2, "user2@mail.com", "validPassword");
+  await login(page2, "user2@mail.com", "validPassword");
 
   // 사용자 1의 프로필 페이지로 이동
   await page1.click('button:has-text("Profile")');
