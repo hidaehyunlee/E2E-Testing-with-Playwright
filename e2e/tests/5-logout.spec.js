@@ -20,7 +20,7 @@ test.describe("5. Logout API 테스트", () => {
     expect(logoutResponseBody).toBe("Logged out");
   });
 
-  test("로그아웃 시 홈화면 필드 초기화", async ({ page }) => {
+  test("5-2. 로그아웃 시 홈화면 필드 초기화", async ({ page }) => {
     const user = generateUser();
     await registerAndLogin(page, user.name, user.email, user.password);
 
