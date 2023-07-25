@@ -56,10 +56,23 @@ async function newPage(context) {
   return await context.newPage();
 }
 
+async function registerAndLogin(page, name, email, password) {
+  await register(page, name, email, password);
+  await login(page, email, password);
+}
+
+async function getWelcomeMessage(page, buttonText) {
+  await page.click(`button:has-text("${buttonText}")`);
+  await page.waitForLoadState("domcontentloaded");
+  return await page.textContent("h2");
+}
+
 module.exports = {
   register,
   login,
   generateUser,
   newContext,
   newPage,
+  registerAndLogin,
+  getWelcomeMessage,
 };

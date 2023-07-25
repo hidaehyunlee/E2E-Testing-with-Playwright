@@ -1,18 +1,11 @@
 const { test, expect } = require("@playwright/test");
-const { register, login, generateUser } = require("./test-utils");
+const {
+  generateUser,
+  registerAndLogin,
+  getWelcomeMessage,
+} = require("./test-utils");
 
 test.describe("4. Update API 테스트", () => {
-  async function registerAndLogin(page, name, email, password) {
-    await register(page, name, email, password);
-    await login(page, email, password);
-  }
-
-  async function getWelcomeMessage(page, buttonText) {
-    await page.click(`button:has-text("${buttonText}")`);
-    await page.waitForLoadState("domcontentloaded");
-    return await page.textContent("h2");
-  }
-
   test("4-1. 로그인된 사용자의 프로필 업데이트", async ({ page }) => {
     // 유효한 정보로 회원가입 및 로그인
     const user = generateUser();

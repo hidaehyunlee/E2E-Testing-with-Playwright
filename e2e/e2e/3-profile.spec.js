@@ -1,18 +1,12 @@
 const { test, expect } = require("@playwright/test");
-const { register, login, generateUser } = require("./test-utils");
+const {
+  register,
+  generateUser,
+  registerAndLogin,
+  getWelcomeMessage,
+} = require("./test-utils");
 
 test.describe("3. Frofile API 테스트", () => {
-  async function registerAndLogin(page, name, email, password) {
-    await register(page, name, email, password);
-    await login(page, email, password);
-  }
-
-  async function getWelcomeMessage(page, buttonText) {
-    await page.click(`button:has-text("${buttonText}")`);
-    await page.waitForLoadState("domcontentloaded");
-    return await page.textContent("h2");
-  }
-
   test("3-1. 로그인된 사용자의 프로필 조회", async ({ page }) => {
     const user = generateUser();
     await register(page, user.name, user.email, user.password);
