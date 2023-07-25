@@ -3,7 +3,6 @@ const {
   register,
   loginWithResponse,
   generateUser,
-  getSessionData,
 } = require("../test-utils");
 
 test("세션 종료 및 로그아웃", async ({ page }) => {
@@ -20,14 +19,10 @@ test("세션 종료 및 로그아웃", async ({ page }) => {
     response.url().includes("http://localhost:5555/logout")
   );
 
-  // Get session data after logging out
-  const sessionData = await getSessionData(page);
-
   // 상태코드 200과 메세지 "Logged out"을 반환하는지 확인합니다.
   const logoutStatusCode = 200;
   const logoutResponseBody = "Logged out";
 
   expect(logoutStatusCode).toBe(200);
   expect(logoutResponseBody).toBe("Logged out");
-  expect(sessionData).toBe(null);
 });

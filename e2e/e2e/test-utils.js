@@ -1,4 +1,6 @@
 // test-utils.js
+const { chromium } = require("playwright");
+
 const generateUser = (name, email, password) => {
   return {
     name: name || "이대현",
@@ -38,17 +40,18 @@ const loginWithResponse = async (page, email, password) => {
   return loginResponse; // 로그인 응답 객체를 반환합니다.
 };
 
-const getSessionData = async (page) => {
-  const sessionData = await page.evaluate(() => {
-    return JSON.parse(localStorage.getItem("session"));
-  });
-  return sessionData;
-};
+async function newContext() {
+  return await chromium.launch();
+}
 
+async function newPage(context) {
+  return await context.newPage();
+}
 
 module.exports = {
   register,
   loginWithResponse,
   generateUser,
-  getSessionData,
+  newContext,
+  newPage,
 };
