@@ -1,8 +1,6 @@
-// test-utils.js
 const { chromium } = require("playwright");
 
 const generateRandomEmail = () => {
-  // Generate a random string for the email
   const randomString = Math.random().toString(36).substring(7);
   return `${randomString}@mail.com`;
 };
@@ -16,6 +14,7 @@ const generateUser = (name, email, password) => {
 };
 
 const register = async (page, name, email, password) => {
+  // 회원가입 응답 객체 반환
   const user = generateUser(name, email, password);
 
   await page.goto("http://localhost:3000");
@@ -24,15 +23,15 @@ const register = async (page, name, email, password) => {
   await page.fill('input[placeholder="Password"]', user.password);
   await page.click('button:has-text("Register")');
 
-  // 서버 응답을 기다립니다. (회원가입 상태 코드 200 확인)
   const response = await page.waitForResponse((response) =>
     response.url().includes("http://localhost:5555/register")
   );
-    
-    return response;
+
+  return response;
 };
 
 const login = async (page, email, password) => {
+  // 로그인 응답 객체 반환
   const user = generateUser(null, email, password);
 
   await page.goto("http://localhost:3000");
@@ -40,12 +39,11 @@ const login = async (page, email, password) => {
   await page.fill('input[placeholder="Password"]', user.password);
   await page.click('button:has-text("Log in")');
 
-  // 서버 응답을 기다립니다. (로그인 상태 코드 200 확인)
   const loginResponse = await page.waitForResponse((response) =>
     response.url().includes("http://localhost:5555/login")
   );
 
-  return loginResponse; // 로그인 응답 객체를 반환합니다.
+  return loginResponse;
 };
 
 async function newContext() {

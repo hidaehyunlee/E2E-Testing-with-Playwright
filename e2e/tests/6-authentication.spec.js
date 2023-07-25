@@ -9,7 +9,6 @@ const {
 
 test.describe("6. 인증 상태 및 세션 테스트", () => {
   test("6-1. 새 탭에서 인증 상태 확인", async ({ context }) => {
-    // 회원가입 및 로그인
     const page = await context.newPage();
     const user = generateUser();
     await registerAndLogin(page, user.name, user.email, user.password);
@@ -22,7 +21,6 @@ test.describe("6. 인증 상태 및 세션 테스트", () => {
     const response = await login(page, user.email, user.password);
     const statusCode = response.status();
 
-    // 상태코드가 200이면 인증 유지로 간주
     const isLogin = statusCode === 200;
     expect(isLogin).toBeTruthy();
   });
@@ -34,19 +32,19 @@ test.describe("6. 인증 상태 및 세션 테스트", () => {
     const page1 = await newPage(context1);
     await registerAndLogin(page1, user.name, user.email, user.password);
 
-    // 새 브라우저(클라이언트)
+    // 새 브라우저(클라이언트)에서 로그인
     const context2 = await newContext();
     const page2 = await newPage(context2);
+
     const response = await login(page2, user.email, user.password);
     const statusCode = response.status();
 
-    // 상태코드가 200이면 인증 유지로 간주
+    // 상태코드가 200 확인
     const isLogin = statusCode === 200;
     expect(isLogin).toBeTruthy();
   });
 
   test("6-3. 새로고침 후 인증 상태 확인", async ({ page }) => {
-    // 회원가입 및 로그인
     const user = generateUser();
     await registerAndLogin(page, user.name, user.email, user.password);
 
@@ -56,17 +54,14 @@ test.describe("6. 인증 상태 및 세션 테스트", () => {
     const response = await login(page, user.email, user.password);
     const statusCode = response.status();
 
-    // 상태코드가 200이면 인증 유지로 간주
     const isLogin = statusCode === 200;
     expect(isLogin).toBeTruthy();
   });
 
-  test("6-4. 새로고침 후 현재페이지 유지", async ({ page }) => {
-    // 회원가입 및 로그인
+  test("6-4. 새로고침 후 현재페이지 url 유지", async ({ page }) => {
     const user = generateUser();
     await registerAndLogin(page, user.name, user.email, user.password);
 
-    // 페이지 새로고침
     await page.reload();
 
     // profile 페이지 유지 확인
@@ -75,10 +70,12 @@ test.describe("6. 인증 상태 및 세션 테스트", () => {
   });
 
   test("6-5. 잘못된 엔드포인트로 API 호출", async ({ page }) => {
+    // 임의의 엔드포인트에 요청
     const response = await page.waitForResponse((response) =>
       response.url().includes("http://localhost:5555/hellohaechi")
     );
 
+    // 상태 코드 404와 에러메세지 "Not Found" 확인
     const statusCode = response.status();
     expect(statusCode).toBe(404);
 

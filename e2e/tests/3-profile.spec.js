@@ -8,18 +8,18 @@ const {
 
 test.describe("3. Frofile API 테스트", () => {
   test("3-1. 로그인된 사용자의 프로필 조회", async ({ page }) => {
+    // 유효한 정보로 회원가입 및 로그인
     const user = generateUser();
-    await register(page, user.name, user.email, user.password);
+    await registerAndLogin(page, user.name, user.email, user.password);
 
-    // 프로필 페이지로 이동합니다.
+    // 세션 인증 후 프로필 페이지로 이동
     await page.click('button:has-text("Profile")');
     await page.waitForLoadState("domcontentloaded");
 
-    // 프로필 정보를 가져옵니다.
+    // 프로필 정보(user.name) 확인
     const welcomeMessage = await page.textContent("h2");
     console.log("Welcome Message:", welcomeMessage);
 
-    // 프로필 정보가 올바르게 반환되는지 확인합니다.
     expect(welcomeMessage).toBe("Welcome, " + user.name + "!");
   });
 
@@ -39,9 +39,9 @@ test.describe("3. Frofile API 테스트", () => {
     // 사용자 2의 프로필 페이지로 이동
     const welcomeMessage2 = await getWelcomeMessage(page2, "Profile");
 
-    // 사용자 2의 프로필 정보가 올바르게 반환되는지 확인합니다.
+    // 사용자 2의 프로필 정보 확인
     expect(welcomeMessage2).toBe(`Welcome, ${user2.name}!`);
-    // 사용자 1의 프로필 정보가 올바르게 반환되는지 확인합니다.
+    // 사용자 1의 프로필 정보 확인. error 발생. user2.name
     expect(welcomeMessage1).toBe(`Welcome, ${user1.name}!`);
   });
 });
