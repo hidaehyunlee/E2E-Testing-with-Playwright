@@ -1,4 +1,4 @@
-# 이대현\_QA Engineer Intern 과제
+# Playwright를 사용한 QA 과제
 
 
 
