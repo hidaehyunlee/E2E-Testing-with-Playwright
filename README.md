@@ -94,7 +94,7 @@
 
 ## 3. 테스트 시나리오
 
-> 해당 테스트 시나리오 표는 `pdf` 파일로 프로젝트 폴더와 함께 압축해 제출했습니다. 혹은 [웹](https://docs.google.com/spreadsheets/d/10K7PVXwcxC2BRIxdCdtQNU5TjViDy009ryKa7KJr57Q/edit?usp=sharing)에서도 확인 가능합니다.
+> 해당 테스트 시나리오 표는 [웹](https://docs.google.com/spreadsheets/d/10K7PVXwcxC2BRIxdCdtQNU5TjViDy009ryKa7KJr57Q/edit?usp=sharing)에서도 확인 가능합니다.
 
 | Category              | TC ID | Test Item                         | Pre-Condition                                                | Test Step                                                    | Expected Result                                              |
 | --------------------- | ----- | --------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
